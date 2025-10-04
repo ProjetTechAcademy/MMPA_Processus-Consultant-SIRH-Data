@@ -1,292 +1,369 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Processus Consultant SIRH Data — One-Pager</title>
+  <title>Fiche de Poste – Consultant SIRH Data</title>
   <style>
     :root{
-      --bg:#0f1220;
-      --bg2:#171a2c;
-      --card:#1f2540;
-      --accent:#ffd54a;
-      --accent-2:#7dd3fc;
-      --text:#e9eefb;
-      --muted:#aab3d3;
-      --ok:#22c55e;
-      --warn:#f59e0b;
-      --danger:#ef4444;
-      --shadow: 0 10px 25px rgba(0,0,0,.35);
-      --radius: 18px;
+      --bg-ecru:#F5F0E6;           /* écru doux (pas de blanc pur) */
+      --text:#1f2937;              /* gris sombre (pas de noir) */
+      --muted:#4b5563;
+      --border:#e5d7bf;
+      /* palette pastel — pas de vert */
+      --rose:#fff1f2; --rose-b:#eec2cb;
+      --amber:#fffbeb; --amber-b:#e3d7a6;
+      --sky:#f0f9ff; --sky-b:#b9d7ea;
+      --violet:#f3e8ff; --violet-b:#d4c3f0;
+      --brand:#EA580C;             /* orange chaleureux */
+      --brand-contrast:#FFF7ED;    /* crème (pas blanc) */
     }
-    *{box-sizing:border-box}
     html,body{height:100%}
-    body{
-      margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      color:var(--text);
-      background:
-        radial-gradient(1200px 600px at 100% 0%, #1a1f3b 0%, transparent 60%),
-        radial-gradient(1000px 500px at 0% 100%, #0e152f 0%, transparent 55%),
-        var(--bg);
-    }
+    body{margin:0;background:var(--bg-ecru);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Ubuntu,"Noto Sans",Arial,"Apple Color Emoji","Segoe UI Emoji";line-height:1.55;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+    .app{max-width:1000px;margin:0 auto;padding:24px}
 
-    /* Layout */
-    .container{
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 28px 18px 64px;
-    }
-    .header{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:16px;
-      margin-bottom:24px;
-    }
-    .title{
-      font-weight:900;
-      font-size: clamp(1.6rem, 2vw + 1rem, 2.2rem);
-      letter-spacing:.3px;
-      display:flex; align-items:center; gap:12px;
-    }
-    .title-badge{
-      font-size:.85rem; font-weight:700;
-      color:#0b1025; background:var(--accent);
-      padding:6px 10px; border-radius:999px;
-    }
-    .toolbar{display:flex; gap:8px; flex-wrap:wrap}
-    .btn{
-      background:linear-gradient(180deg, #283157, #1d2342);
-      color:var(--text);
-      border:1px solid #2b3462;
-      padding:10px 14px; border-radius:12px;
-      cursor:pointer; font-weight:700; font-size:.95rem;
-      box-shadow:var(--shadow);
-      transition: transform .08s ease, filter .2s ease, border-color .2s ease;
-    }
-    .btn:hover{transform:translateY(-1px); filter:brightness(1.05)}
-    .btn.accent{background:linear-gradient(180deg, #ffe082, #ffca28); color:#1e223d; border-color:#e6b400}
-    .btn.ghost{background:transparent; border-color:#3a4274}
+    /* header */
+    .top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
+    h1{margin:0;font-size:clamp(22px,3.2vw,34px);font-weight:800;letter-spacing:-.015em}
+    .subtitle{color:var(--muted)}
 
-    /* Info banner */
-    .banner{
-      background: linear-gradient(90deg, rgba(125,211,252,.12), rgba(255,213,74,.12));
-      border:1px dashed #37507e;
-      padding:14px 16px; border-radius:14px;
-      color:var(--muted); margin-bottom:18px;
-      display:flex; gap:10px; align-items:flex-start;
-    }
-    .banner b{color:var(--text)}
+    /* cards */
+    .card{border:1px solid var(--border);background:#FBF7EF;border-radius:20px;overflow:hidden}
+    .card h2{margin:0;padding:14px 16px;border-bottom:1px solid var(--border);font-size:16px}
+    .card .content{padding:16px}
 
-    /* Grid */
-    .grid{
-      display:grid;
-      grid-template-columns: repeat(12,1fr);
-      gap:16px;
-    }
+    /* layout */
+    .grid-2{display:grid;grid-template-columns:1fr;gap:16px}
+    @media(min-width:900px){.grid-2{grid-template-columns:1fr 1fr}}
 
-    /* Cards */
-    .card{
-      grid-column: span 12;
-      background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
-      border:1px solid rgba(124,139,204,.22);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-    }
-    .card-header{
-      display:flex; align-items:center; justify-content:space-between;
-      padding:16px 18px; cursor:pointer; user-select:none;
-      background: linear-gradient(180deg, #212749, #1b2040);
-    }
-    .card-title{
-      display:flex; flex-wrap:wrap; gap:10px 14px; align-items:center;
-      font-weight:800; letter-spacing:.2px;
-      color:var(--accent);
-    }
-    .card-sub{
-      color:var(--muted); font-weight:600; font-size:.95rem;
-    }
-    .chev{
-      width:22px; height:22px; display:inline-block; transition: transform .2s ease;
-      border-radius:6px; border:1px solid #33406e; display:grid; place-items:center; color:var(--accent);
-      background:#1a2144;
-    }
-    .card.open .chev{ transform: rotate(180deg) }
-    .card-body{
-      padding: 8px 18px 18px;
-      display:none;
-      animation: fade .18s ease-out;
-    }
-    .card.open .card-body{ display:block }
-    @keyframes fade{ from{ opacity:0; transform: translateY(-4px) } to{ opacity:1; transform:none } }
+    /* chips & badges */
+    .chips{display:flex;flex-wrap:wrap;gap:8px}
+    .chip{border:1px solid var(--border);background:#f7efe1;border-radius:999px;padding:6px 10px;font-size:12px}
 
-    /* Lists */
-    .list{
-      margin:12px 0 0 0; padding-left:20px;
-    }
-    .list li{ margin:6px 0; color:#d8def5 }
-    .meta{
-      margin-top:10px; font-size:.88rem; color:var(--muted);
-      border-top:1px dashed #33406e; padding-top:10px;
-    }
-    .pill{ display:inline-block; border:1px solid #3a4274; padding:4px 8px; border-radius:999px; margin-right:6px; margin-top:6px; font-size:.8rem; background:#171d3a }
+    /* buttons */
+    .btn{appearance:none;border:1px solid var(--border);background:#f9f3e6;color:var(--text);padding:8px 12px;border-radius:999px;cursor:pointer;font-size:14px;transition:transform .05s ease,box-shadow .2s ease}
+    .btn:hover{box-shadow:0 1px 0 rgba(0,0,0,.04),0 2px 8px rgba(0,0,0,.06)}
+    .btn:active{transform:translateY(1px)}
+    .btn.primary{background:var(--brand);border-color:var(--brand);color:#fff9ee}
+    .btn.ghost{background:var(--brand-contrast)}
 
-    /* Two-column on wide screens */
-    @media (min-width: 980px){
-      .span-6 { grid-column: span 6 }
-    }
+    /* pastel sections */
+    .rose{background:var(--rose);border-color:var(--rose-b)}
+    .amber{background:var(--amber);border-color:var(--amber-b)}
+    .sky{background:var(--sky);border-color:var(--sky-b)}
+    .violet{background:var(--violet);border-color:var(--violet-b)}
 
-    /* Footer */
-    .foot{
-      margin-top: 28px; color:var(--muted); font-size:.9rem;
-      display:flex; gap:10px; align-items:center; flex-wrap:wrap;
-    }
-    .tag{background:#152048; border:1px solid #2d3a74; padding:6px 10px; border-radius:12px}
+    /* small utils */
+    .muted{color:var(--muted)}
+    .k{font-size:12px;color:var(--muted);text-transform:uppercase}
+    .v{font-weight:800}
+    .row{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+    .sep{height:1px;background:var(--border);margin:24px 0}
+
+    /* print */
+    @media print{.toolbar{display:none!important} body{background:#fffaf0}}
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <div class="title">
-        <span>🚀 Processus Consultant SIRH Data</span>
-        <span class="title-badge">HTML • CSS • JS</span>
+  <main class="app" id="app">
+    <header class="top">
+      <div>
+        <h1>Fiche de Poste – Consultant SIRH Data</h1>
+        <p class="subtitle">📍 Courbevoie • 👥 Présentiel 4 j/semaine • 🗓️ Mission 6 mois</p>
       </div>
-      <div class="toolbar">
-        <button class="btn accent" id="expandAll">Tout ouvrir</button>
-        <button class="btn ghost" id="collapseAll">Tout fermer</button>
+      <div class="toolbar row">
+        <button class="btn" id="togglePastel" aria-pressed="false">🌈 Arrière‑plan pastel</button>
+        <button class="btn" onclick="window.print()">🖨️ Imprimer / PDF</button>
+        <button class="btn primary" id="copyText">📋 Copier la fiche</button>
       </div>
-    </div>
+    </header>
 
-    <div class="banner">💡 <b>Objectif :</b>&nbsp; structurer une démarche claire et actionnable pour la mission SIRH Data (OGF) : cadrage → specs → collaboration → recette → gouvernance. Contenu orienté outils & livrables (Microsoft Fabric / Power BI, Pléiades, Horoquartz).</div>
+    <div class="sep"></div>
 
-    <div class="grid" id="cards">
-      <!-- Les cartes seront injectées par JS pour garder le HTML propre -->
-    </div>
+    <section class="grid-2">
+      <article class="card rose">
+        <h2>🏢 Présentation de l’entreprise</h2>
+        <div class="content">
+          <p>OGF est <strong>leader des services funéraires en France</strong> (plus de 6 000 collaborateurs et un réseau national de marques reconnues). L’entreprise modernise ses activités et <strong>accélère sur la Data</strong> pour améliorer l’accompagnement des familles et optimiser ses opérations.</p>
+          <div class="chips"><span class="chip">PFG</span><span class="chip">Dignité Funéraire</span><span class="chip">Crématoriums</span><span class="chip">Transformation digitale</span></div>
+        </div>
+      </article>
 
-    <div class="foot">
-      <span class="tag">🎯 Livrables : cahier des besoins, specs fonctionnelles, dictionnaire de données, règles de gestion, jeux de tests, PV de recette.</span>
-      <span class="tag">🛠️ Écosystème : Microsoft Fabric, Power BI, Teams, Jira/Trello, Confluence, Excel.</span>
-      <span class="tag">🔐 RGPD & sécurité : accès profilés, traçabilité, qualité & gouvernance des données.</span>
-    </div>
-  </div>
+      <article class="card amber">
+        <h2>🎯 Contexte & objectifs</h2>
+        <div class="content">
+          <p>OGF a déjà déployé des <strong>cockpits de pilotage</strong> sur plusieurs domaines avec l’écosystème Microsoft (Data Lake, Fabric, Power BI). Le <strong>domaine RH</strong> reste en retrait : données silotées, dépendance à un expert, alors que la <strong>masse salariale</strong> est le premier poste de dépense. La mission vise à <strong>formaliser les besoins</strong>, structurer les <strong>règles de gestion</strong> et préparer l’<strong>industrialisation</strong> des données RH.</p>
+          <div class="chips"><span class="chip">Microsoft Fabric</span><span class="chip">Power BI</span><span class="chip">Data Lake</span><span class="chip">RH Data</span></div>
+        </div>
+      </article>
+    </section>
 
-  <script>
-    // --- Données (remplace ton tableau React) ---
-    const steps = [
-      {
-        title: "1️⃣ Cadrage",
-        summary: "Recueil et analyse des besoins RH",
-        details: [
-          "Ateliers métiers (RH, Contrôle de gestion) : objectifs, usages, irritants, priorités.",
-          "Cartographie SI & flux : Pléiades (paie/GA), Horoquartz (GTA), autres sources (CRM/ERP).",
-          "Indicateurs RH cibles : effectifs (ETP/HC), absentéisme, turnover, masse salariale, coûts par entité.",
-          "Livrable : Cahier des besoins fonctionnels validé (périmètre, dépendances, priorités)."
-        ],
-        tools: ["Workshops","Jira/Trello","PowerPoint","Notion/Confluence"],
-        kpi: ["Ateliers réalisés","Backlog priorisé","Périmètre validé"]
-      },
-      {
-        title: "2️⃣ Spécifications",
-        summary: "Rédaction des spécifications fonctionnelles",
-        details: [
-          "Traduction besoins → règles de gestion & scénarios d’usage (ex. effectifs moyens mensuels).",
-          "Dictionnaire de données RH partagé : définitions, formats, sources, règles de calcul.",
-          "Règles de gestion : paie (Pleiades), temps (Horoquartz), agrégations, historisation, exceptions.",
-          "Glossaire commun RH–DSI pour sécuriser la communication & l’interprétation."
-        ],
-        tools: ["Confluence","Miro","Excel","SharePoint"],
-        kpi: ["Specs complètes","Glossaire validé","Dictionnaire versionné"]
-      },
-      {
-        title: "3️⃣ Collaboration & Pilotage",
-        summary: "Travail avec les équipes Data/BI",
-        details: [
-          "Coordination avec Data Engineers pour intégration dans Microsoft Fabric / Data Lake.",
-          "Qualité & cohérence : tests de complétude, doublons, référentiels (établissements, métiers).",
-          "Pilotage agile : stand-ups, revues, REX, reporting RH/IT, gestion des risques."
-        ],
-        tools: ["Teams","Asana/Jira","Power BI","Microsoft Fabric"],
-        kpi: ["Taux de complétude","Nb d’anomalies traitées","Vélocité sprint"]
-      },
-      {
-        title: "4️⃣ Recette fonctionnelle",
-        summary: "Tests et validation des livrables",
-        details: [
-          "Cahier de tests fonctionnels : cas RH (paie, GTA, effectifs, masse salariale).",
-          "Exécution recette sur flux & dashboards Power BI (comparatifs source ↔ cible).",
-          "Suivi anomalies jusqu’à PV de recette signé par les utilisateurs."
-        ],
-        tools: ["Excel","Jira","Quality Center","Power BI"],
-        kpi: ["Couverture de test","Anomalies ouvertes","PV signé"]
-      },
-      {
-        title: "5️⃣ Gouvernance & Amélioration continue",
-        summary: "Mettre en place une gouvernance RH Data",
-        details: [
-          "Processus de MAJ & documentation (data stewardship, ownership, RACI).",
-          "Accès sécurisés & conformité RGPD (rôles, audits, journalisation).",
-          "Boucle d’amélioration continue : feedbacks, roadmap d’évolutions, comités de pilotage."
-        ],
-        tools: ["Power BI","Forms/Survey","Confluence","SharePoint"],
-        kpi: ["Satisfaction utilisateurs","Délai de mise en prod","Nb d’évolutions livrées"]
-      }
-    ];
+    <div class="sep"></div>
 
-    // --- rendu dynamique des cartes ---
-    const grid = document.getElementById('cards');
-
-    steps.forEach((s, idx) => {
-      const card = document.createElement('section');
-      card.className = 'card span-6';
-      card.innerHTML = `
-        <header class="card-header" data-idx="${idx}">
-          <div>
-            <div class="card-title">${s.title}</div>
-            <div class="card-sub">${s.summary}</div>
-          </div>
-          <div class="chev">⌄</div>
-        </header>
-        <div class="card-body">
-          <ul class="list">
-            ${s.details.map(d => `<li>• ${d}</li>`).join('')}
+    <section class="grid-2">
+      <article class="card sky">
+        <h2>🧩 Missions principales</h2>
+        <div class="content">
+          <ul>
+            <li><strong>Recueil & cadrage</strong> : consolider les besoins du contrôle de gestion RH, définir indicateurs (effectifs, absentéisme, turnover, masse salariale), prioriser selon les enjeux.</li>
+            <li><strong>Spécifications fonctionnelles</strong> : décrire extractions/transformations (Pléiades, Sopra, Horoquartz), documenter règles de gestion, bâtir un <em>dictionnaire de données RH</em> partagé.</li>
+            <li><strong>Collaboration Data/BI</strong> : travailler avec les équipes techniques (Microsoft Fabric/Power BI), garantir cohérence & qualité, contribuer à la recette fonctionnelle.</li>
+            <li><strong>Gouvernance RH Data</strong> : organiser les processus de mise à jour/documentation et sécuriser l’accès aux données.</li>
           </ul>
-          <div class="meta">
-            <div><strong>🛠️ Outils</strong> :
-              ${s.tools.map(t => `<span class="pill">${t}</span>`).join('')}
-            </div>
-            <div style="margin-top:6px;"><strong>📏 KPI (critères d’acceptation)</strong> :
-              ${s.kpi.map(k => `<span class="pill">${k}</span>`).join('')}
-            </div>
+        </div>
+      </article>
+
+      <article class="card violet">
+        <h2>🧠 Profil recherché</h2>
+        <div class="content">
+          <ul>
+            <li>Expérience <strong>5–10 ans</strong> en conseil/chefferie de projet <strong>SIRH/Data</strong>.</li>
+            <li>Maîtrise des systèmes RH : <strong>Pléiades</strong> (Sopra) & <strong>Horoquartz</strong>.</li>
+            <li>Solide pratique de la <strong>modélisation fonctionnelle</strong> (règles, dictionnaire, specs).</li>
+            <li>Connaissance de l’écosystème <strong>Microsoft Data</strong> (dont Power BI) appréciée.</li>
+            <li>Excellente <strong>capacité de formalisation</strong> et sens du relationnel.</li>
+          </ul>
+        </div>
+      </article>
+    </section>
+
+    <div class="sep"></div>
+
+    <section class="grid-2">
+      <article class="card amber">
+        <h2>📦 Livrables attendus</h2>
+        <div class="content">
+          <ul>
+            <li><strong>Cahier des besoins</strong> (indicateurs, axes d’analyse, usages cibles).</li>
+            <li><strong>Spécifications fonctionnelles</strong> d’extraction/transformations RH.</li>
+            <li><strong>Règles de gestion</strong> (existantes & cibles) documentées.</li>
+            <li><strong>Dictionnaire de données RH</strong> partagé et pérenne.</li>
+            <li><strong>Support à la recette</strong> des flux & cockpits RH.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="card rose">
+        <h2>🧾 Modalités</h2>
+        <div class="content">
+          <p class="row"><span class="k">Localisation</span> <span class="v">Courbevoie (92)</span></p>
+          <p class="row"><span class="k">Rythme</span> <span class="v">Présentiel 4 jours / semaine</span></p>
+          <p class="row"><span class="k">Durée</span> <span class="v">Mission de 6 mois</span></p>
+          <div class="chips" style="margin-top:8px"><span class="chip">Démarrage souhaité : ASAP</span><span class="chip">Contexte RH Data</span><span class="chip">Environnements Microsoft</span></div>
+        </div>
+      </article>
+    </section>
+    <div class="sep"></div>
+
+    <!-- 👋 PRESTATAIRE / PROPOSITION -->
+    <section class="grid-2">
+      <article class="card sky">
+        <h2>🎙️ Ma présentation</h2>
+        <div class="content">
+          <p>Je m’appelle <strong>Mathilde Martine PAISLEY</strong>, consultante <strong>AMOA SIRH / Paie / GTA</strong> passée par des environnements multisites et multi‑conventions. Mon terrain de jeu : <em>recette fonctionnelle</em>, <em>règles de gestion</em>, <em>documentation</em> et <em>accompagnement des utilisateurs</em>. Avec une vingtaine d’années au plus près des RH et de la paie, j’apporte une approche très concrète et pédagogique.</p>
+          <div class="chips">
+            <span class="chip">📍 Clichy (92)</span>
+            <span class="chip">📧 mathilde.martine.paisley@gmail.com</span>
+            <span class="chip">📞 06 85 90 08 87</span>
           </div>
         </div>
-      `;
-      grid.appendChild(card);
+      </article>
+
+      <article class="card violet">
+        <h2>💡 Ce que j’apporte à OGF</h2>
+        <div class="content">
+          <ul>
+            <li><strong>Paie & GTA opérationnelles</strong> : maîtrise des sujets d’absences, DSN, référentiels, cas particuliers, avec restitution claire aux métiers.</li>
+            <li><strong>AMOA SIRH</strong> : ateliers, spécifications, recette, pilotage des anomalies, mise en production et transfert de compétences.</li>
+            <li><strong>Clarté & pédagogie</strong> : documents simples (glossaire, dictionnaire, règles de gestion) et explications accessibles aux non initiés.</li>
+            <li><strong>Écosystème Microsoft & SIRH</strong> : collaboration fluide avec les équipes Data/BI (Power BI/Fabric) et SIRH (Pléiades, Horoquartz, HR Access, SuccessFactors...).</li>
+          </ul>
+        </div>
+      </article>
+    </section>
+
+    <section class="grid-2" style="margin-top:16px">
+      <article class="card amber">
+        <h2>🛠️ Réalisations (exemples)</h2>
+        <div class="content">
+          <ul>
+            <li><strong>Nexpublica</strong> – Référente fonctionnelle GTA : appui sur Chronotime, ateliers, spécifications, coordination avec les équipes techniques (2024–2025).</li>
+            <li><strong>Groupe Ponticelli</strong> – Coordination SIRH : finalisation de la recette et préparation MEP sur SAP HCM & SuccessFactors EC/Time (2024).</li>
+            <li><strong>CGI – Ministère de la Justice</strong> : recette fonctionnelle DSN et accompagnement utilisateurs sur HR Access (2023–2024).</li>
+            <li><strong>CGI – Air Liquide</strong> : mise à jour du livre blanc paie, modélisation des processus RH (HR Access/Workday) (2023–2024).</li>
+            <li><strong>Epi‑Use France</strong> : contribution à un CSP paie (Pléiade/SAP), guides utilisateurs et conduite du changement (2018–2022).</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="card rose">
+        <h2>🗺️ Comment je réponds au besoin (méthode)</h2>
+        <div class="content">
+          <p class="muted">Vue d’ensemble : un parcours court et très concret, avec des livrables utiles dès le début. Chaque étape ci‑dessous inclut un <em>compte‑rendu pour non initiés</em> afin que tout le monde comprenne le pourquoi et le comment.</p>
+          <div class="chips" style="margin-bottom:8px">
+            <span class="chip">J1–10 : Cadrage express</span>
+            <span class="chip">S3–4 : Spécifications</span>
+            <span class="chip">S5–7 : Recette</span>
+            <span class="chip">S8+ : Mise en service</span>
+            <span class="chip">Run : Amélioration continue</span>
+          </div>
+          <ol>
+            <li><strong>Jours 1–10 — Cadrage express</strong>
+              <ul>
+                <li><b>Objectif :</b> aligner besoins RH, périmètre, priorités et contraintes SI.</li>
+                <li><b>Livrables :</b> cahier des besoins, backlog priorisé, cartographie simple des flux (Pléiades/Horoquartz/BI).</li>
+                <li><b>Compte‑rendu (👶) :</b> « On liste clairement ce que vous voulez voir et à quoi ça servira, avec un plan d’action lisible. »</li>
+                <li><b>RACI :</b> <u>R</u>=AMOA (moi), <u>A</u>=PO/DRH, <u>C</u>=Contrôle de gestion & DSI, <u>I</u>=Direction.</li>
+                <li><b>KPI & critères :</b> 100% ateliers tenus, ≥80% besoins qualifiés, périmètre validé.</li>
+              </ul>
+            </li>
+            <li><strong>Semaine 3–4 — Spécifications</strong>
+              <ul>
+                <li><b>Objectif :</b> transformer les besoins en règles de gestion et en colonnes de données bien définies.</li>
+                <li><b>Livrables :</b> règles de gestion (cas standards & particuliers), dictionnaire de données RH, scénarios d’usage, glossaire RH‑DSI.</li>
+                <li><b>Compte‑rendu (👶) :</b> « On écrit le mode d’emploi : quel chiffre, comment on le calcule, d’où il vient et quoi faire en cas particulier. »</li>
+                <li><b>RACI :</b> <u>R</u>=AMOA, <u>A</u>=PO, <u>C</u>=Data Eng./BI & Référents RH, <u>I</u>=Utilisateurs clés.</li>
+                <li><b>KPI & critères :</b> dictionnaire versionné, règles couvrant ≥90% des cas, validation métiers obtenue.</li>
+              </ul>
+            </li>
+            <li><strong>Semaine 5–7 — Recette fonctionnelle</strong>
+              <ul>
+                <li><b>Objectif :</b> vérifier que les données et les tableaux de bord donnent bien les résultats attendus.</li>
+                <li><b>Livrables :</b> cahier de tests RH (paie, GTA, effectifs, masse salariale), résultats de tests, suivi des anomalies, PV de recette.</li>
+                <li><b>Compte‑rendu (👶) :</b> « On compare les chiffres nouveaux avec les sources d’origine pour voir si ça colle et on corrige s’il y a un écart. »</li>
+                <li><b>RACI :</b> <u>R</u>=AMOA & Utilisateurs clés, <u>A</u>=PO, <u>C</u>=BI/DSI, <u>I</u>=Sponsors.</li>
+                <li><b>KPI & critères :</b> couverture de test ≥95%, anomalies critiques = 0, PV signé.</li>
+              </ul>
+            </li>
+            <li><strong>Semaine 8+ — Mise en service & adoption</strong>
+              <ul>
+                <li><b>Objectif :</b> déployer, former et ancrer les usages.</li>
+                <li><b>Livrables :</b> guides pas‑à‑pas, sessions de formation (1 à 2 h), plan de support, mini FAQ.</li>
+                <li><b>Compte‑rendu (👶) :</b> « On montre aux équipes comment s’en servir au quotidien avec des exemples simples. »</li>
+                <li><b>RACI :</b> <u>R</u>=AMOA, <u>A</u>=PO, <u>C</u>=Managers RH, <u>I</u>=Utilisateurs finaux.</li>
+                <li><b>KPI & critères :</b> ≥80% des utilisateurs formés, satisfaction ≥4/5, tickets de démarrage résolus &lt;5 jours.</li>
+              </ul>
+            </li>
+            <li><strong>Run — Amélioration continue</strong>
+              <ul>
+                <li><b>Objectif :</b> pérenniser qualité, sécurité et valeur d’usage.</li>
+                <li><b>Livrables :</b> comités mensuels, backlog d’évolutions, tableau de bord KPI (qualité, adoption, incidents).</li>
+                <li><b>Compte‑rendu (👶) :</b> « On garde ce qui marche, on corrige le reste et on ajoute ce qui manque. »</li>
+                <li><b>RACI :</b> <u>R</u>=PO & AMOA, <u>A</u>=Sponsor, <u>C</u>=BI/DSI, <u>I</u>=Utilisateurs.</li>
+                <li><b>KPI & critères :</b> SLO qualité ≥99%, délai moyen de correction &lt;10 jours, adoption en hausse.</li>
+              </ul>
+            </li>
+          </ol>
+          <p class="muted">Outils : Teams/Jira ou Trello pour le pilotage, Confluence/SharePoint pour la doc, Power BI/Fabric pour la restitution. Tous les documents sont fournis en <strong>PDF</strong> et en format éditable.</p>
+        </div>
+      </article>
+    </section>
+
+    <section class="grid-2" style="margin-top:16px">
+      <article class="card sky">
+        <h2>📚 Références & formations</h2>
+        <div class="content">
+          <ul>
+            <li><strong>Expert en stratégie digitale</strong> (RNCP niveau 7) – attestation provisoire du 21/07/2025.</li>
+            <li><strong>Résultats de certification</strong> – blocs compétence validés (analyse besoins, veille, pilotage, communication, management de projet).</li>
+            <li><strong>Diplôme : Responsable Stratégie Digitale</strong> (24/04/2025).</li>
+            <li><strong>Outils & SI</strong> : Pléiades, HR Access, SAP HCM/SuccessFactors, Horoquartz, Cegid ; Power BI/Fabric, Confluence/Jira.</li>
+          </ul>
+          <div class="chips" style="margin-top:8px">
+            <span class="chip">SuccessFactors (EC/Time)</span>
+            <span class="chip">HR Access</span>
+            <span class="chip">Pléiades</span>
+            <span class="chip">Horoquartz</span>
+            <span class="chip">Power BI</span>
+            <span class="chip">Fabric</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="card violet">
+        <h2>🤝 Proposition de collaboration</h2>
+        <div class="content">
+          <h3 style="margin:0 0 8px 0">🔓 Kick‑off (2 h) — ordre du jour</h3>
+          <ol style="margin-top:0">
+            <li>Objectifs & succès attendus (KPI d’adoption/qualité).</li>
+            <li>Cartographie rapide des sources & des tableaux de bord existants.</li>
+            <li>Périmètre court‑terme vs. différé (MVP & évolutions).</li>
+            <li>Rôles & responsabilités (RACI), canaux de communication.</li>
+            <li>Planning et critères de validation par jalon.</li>
+          </ol>
+
+          <h3 style="margin:12px 0 8px 0">🗓️ Planning indicatif (8–10 semaines)</h3>
+          <ul style="margin-top:0">
+            <li><b>S1–2</b> : Cadrage, ateliers, backlog priorisé, plan de tests.</li>
+            <li><b>S3–4</b> : Spécifications & dictionnaire, maquettage rapide (si utile).</li>
+            <li><b>S5–7</b> : Recette progressive, corrections, PV de recette.</li>
+            <li><b>S8+</b> : Mise en service, formation, support de démarrage.</li>
+          </ul>
+
+          <h3 style="margin:12px 0 8px 0">📢 Gouvernance & communication</h3>
+          <ul style="margin-top:0">
+            <li><b>Rituels</b> : point quotidien 15 min (si besoin), comité hebdo 30 min, comité de pilotage mensuel.</li>
+            <li><b>Canaux</b> : Teams (fil dédié), compte‑rendus concis après chaque jalon.</li>
+            <li><b>Traçabilité</b> : décisions & documents sur Confluence/SharePoint.</li>
+          </ul>
+
+          <h3 style="margin:12px 0 8px 0">✅ Engagements de qualité</h3>
+          <ul style="margin-top:0">
+            <li>Documents <b>accessibles aux non initiés</b> (glossaire, schémas, exemples).</li>
+            <li>Jeux d’essai <b>reproductibles</b> & checklist de recette.</li>
+            <li>Respect RGPD : minimisation, journalisation des accès, partages contrôlés.</li>
+          </ul>
+
+          <h3 style="margin:12px 0 8px 0">📦 Modalités</h3>
+          <ul style="margin-top:0">
+            <li><b>Lieu/rythme</b> : Courbevoie, présentiel 4j/sem. (adaptable selon points clés).</li>
+            <li><b>Disponibilité</b> : démarrage ASAP après kick‑off.</li>
+            <li><b>Cadre</b> : au forfait pour les livrables cadrés ou en <abbr title="Tarif Journalier Moyen">TJM</abbr> — à préciser selon périmètre.</li>
+          </ul>
+
+          <div class="row" style="margin-top:8px"><button class="btn primary" onclick="window.print()">🖨️ Exporter ma proposition</button></div>
+        </div>
+      </article>
+    </section>
+
+    <div class="sep"></div>
+
+    <section class="card" style="border-style:dashed">
+      <h2>💌 Candidater / Partager</h2>
+      <div class="content">
+        <p>Cette fiche est prête à être imprimée ou partagée. Tu peux aussi copier tout le texte pour le coller dans une annonce.</p>
+        <div class="row"><button class="btn primary" onclick="window.print()">🖨️ Imprimer / Exporter PDF</button><button class="btn ghost" id="copyText2">📋 Copier la fiche</button></div>
+      </div>
+    </section>
+
+    <footer class="muted" style="margin-top:24px;font-size:12px">© <span id="year"></span> — Modèle HTML/CSS/JS sans dépendances, palette pastel (pas de vert), fond écru, émojis 🪄</footer>
+  </main>
+
+  <script>
+    // évite le blanc/noir agressifs en proposant un dégradé pastel optionnel
+    const pastelBtn=document.getElementById('togglePastel');
+    pastelBtn.addEventListener('click',()=>{
+      const on=document.body.style.backgroundImage?false:true;
+      document.body.style.backgroundImage = on? 'linear-gradient(135deg,#fff1f2 0%,#fffbeb 40%,#f3e8ff 75%,#f0f9ff 100%)':'';
+      pastelBtn.setAttribute('aria-pressed', String(on));
+      pastelBtn.textContent= on? '🌈 Arrière‑plan activé' : '🌈 Arrière‑plan pastel';
     });
 
-    // --- interactions : accordeons + boutons global ---
-    function toggleCard(card){
-      card.classList.toggle('open');
+    // copier la fiche (texte) dans le presse‑papiers
+    function copyWholePage(){
+      const sel = window.getSelection();
+      const range = document.createRange();
+      range.selectNode(document.querySelector('main'));
+      sel.removeAllRanges(); sel.addRange(range);
+      try{ document.execCommand('copy'); alert('Texte copié ✅'); }
+      catch(e){ navigator.clipboard.writeText(document.querySelector('main').innerText).then(()=>alert('Texte copié ✅')); }
+      sel.removeAllRanges();
     }
-    function setAll(open=true){
-      document.querySelectorAll('.card').forEach(c => {
-        c.classList.toggle('open', open);
-      });
-    }
-    grid.addEventListener('click', (e) => {
-      const header = e.target.closest('.card-header');
-      if(!header) return;
-      toggleCard(header.parentElement);
-    });
-    document.getElementById('expandAll').addEventListener('click', ()=>setAll(true));
-    document.getElementById('collapseAll').addEventListener('click', ()=>setAll(false));
+    document.getElementById('copyText').addEventListener('click',copyWholePage);
+    document.getElementById('copyText2').addEventListener('click',copyWholePage);
 
-    // Ouvrir la première carte par défaut
-    setTimeout(() => {
-      const first = document.querySelector('.card');
-      if(first) first.classList.add('open');
-    }, 0);
+    // année footer
+    document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </body>
 </html>

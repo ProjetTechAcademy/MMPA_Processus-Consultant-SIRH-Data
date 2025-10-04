@@ -1,89 +1,292 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { motion } from "framer-motion";
-import { ChevronDown } from "lucide-react";
-
-export default function ConsultantSIRHProcess() {
-  const steps = [
-    {
-      title: "1️⃣ Cadrage",
-      summary: "Recueil et analyse des besoins RH",
-      details: [
-        "Organisation d’ateliers détaillés avec les métiers (RH, Contrôle de gestion)",
-        "Cartographie complète des systèmes existants : Pléiades, Sopra, Horoquartz",
-        "Identification et priorisation des indicateurs RH stratégiques : effectifs, absentéisme, turnover, masse salariale, coûts par service",
-        "Production d’un cahier des besoins fonctionnels structuré et validé"
-      ],
-      tools: "Workshops, Trello/Jira, PowerPoint, Notion"
-    },
-    {
-      title: "2️⃣ Spécifications",
-      summary: "Rédaction des spécifications fonctionnelles",
-      details: [
-        "Traduire les besoins métiers en règles fonctionnelles et scénarios d’usage",
-        "Documentation exhaustive des règles de gestion RH (actuelles + futures)",
-        "Élaboration d’un dictionnaire de données RH partagé, versionné et pérenne",
-        "Mise en place d’un glossaire commun RH-DSI pour faciliter la communication"
-      ],
-      tools: "Confluence, Miro, Excel, Power BI, SharePoint"
-    },
-    {
-      title: "3️⃣ Collaboration & Pilotage",
-      summary: "Travail avec les équipes Data/BI",
-      details: [
-        "Coordination avec les Data Engineers pour l’intégration des données dans Microsoft Fabric",
-        "Contrôle qualité et cohérence des données RH intégrées au Data Lake (tests de cohérence, duplications, qualité)",
-        "Suivi projet agile : stand-ups, rétrospectives, reporting aux managers RH et IT"
-      ],
-      tools: "Teams, Asana, Jira, Power BI, Microsoft Fabric"
-    },
-    {
-      title: "4️⃣ Recette fonctionnelle",
-      summary: "Tests et validation des livrables",
-      details: [
-        "Rédaction des cahiers de tests fonctionnels avec cas métiers RH (paie, GTA, effectifs)",
-        "Exécution des recettes sur les flux de données RH et sur les dashboards Power BI",
-        "Suivi et correction des anomalies jusqu’à validation finale par les utilisateurs métiers"
-      ],
-      tools: "Excel, Jira, Quality Center, Power BI"
-    },
-    {
-      title: "5️⃣ Gouvernance & Amélioration continue",
-      summary: "Mettre en place une gouvernance RH Data",
-      details: [
-        "Formaliser les processus de mise à jour et de documentation (data stewardship)",
-        "Mise en place d’un accès sécurisé et hiérarchisé aux données RH (RGPD, droits utilisateurs)",
-        "Suivi des feedbacks utilisateurs via enquêtes et itérations continues sur les dashboards",
-        "Organisation de comités de pilotage pour valider l’évolution des indicateurs RH"
-      ],
-      tools: "Power BI, Feedback utilisateurs, Outils de gouvernance Data, Méthodes Agile"
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Processus Consultant SIRH Data — One-Pager</title>
+  <style>
+    :root{
+      --bg:#0f1220;
+      --bg2:#171a2c;
+      --card:#1f2540;
+      --accent:#ffd54a;
+      --accent-2:#7dd3fc;
+      --text:#e9eefb;
+      --muted:#aab3d3;
+      --ok:#22c55e;
+      --warn:#f59e0b;
+      --danger:#ef4444;
+      --shadow: 0 10px 25px rgba(0,0,0,.35);
+      --radius: 18px;
     }
-  ];
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
+      background:
+        radial-gradient(1200px 600px at 100% 0%, #1a1f3b 0%, transparent 60%),
+        radial-gradient(1000px 500px at 0% 100%, #0e152f 0%, transparent 55%),
+        var(--bg);
+    }
 
-  return (
-    <div className="p-10 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 min-h-screen">
-      <h2 className="text-4xl font-extrabold text-center text-yellow-300 mb-12">
-        🚀 Processus Consultant SIRH Data
-      </h2>
-      <div className="space-y-8 max-w-5xl mx-auto">
-        {steps.map((step, idx) => (
-          <motion.div
-            key={idx}
-            whileHover={{ scale: 1.03 }}
-            className="rounded-2xl shadow-lg border border-gray-600 bg-gray-800 p-6 hover:shadow-yellow-300/30 transition-all duration-300"
-          >
-            <h3 className="text-xl font-bold text-yellow-200 flex items-center justify-between">
-              {step.title} – <span className="text-gray-300 font-medium">{step.summary}</span>
-              <ChevronDown className="w-5 h-5 text-yellow-400 ml-2" />
-            </h3>
-            <ul className="list-disc ml-6 mt-4 space-y-2 text-gray-200 text-sm">
-              {step.details.map((d, i) => (
-                <li key={i}>{d}</li>
-              ))}
-            </ul>
-            <p className="text-xs text-gray-400 italic mt-3">🛠️ Outils : {step.tools}</p>
-          </motion.div>
-        ))}
+    /* Layout */
+    .container{
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 28px 18px 64px;
+    }
+    .header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom:24px;
+    }
+    .title{
+      font-weight:900;
+      font-size: clamp(1.6rem, 2vw + 1rem, 2.2rem);
+      letter-spacing:.3px;
+      display:flex; align-items:center; gap:12px;
+    }
+    .title-badge{
+      font-size:.85rem; font-weight:700;
+      color:#0b1025; background:var(--accent);
+      padding:6px 10px; border-radius:999px;
+    }
+    .toolbar{display:flex; gap:8px; flex-wrap:wrap}
+    .btn{
+      background:linear-gradient(180deg, #283157, #1d2342);
+      color:var(--text);
+      border:1px solid #2b3462;
+      padding:10px 14px; border-radius:12px;
+      cursor:pointer; font-weight:700; font-size:.95rem;
+      box-shadow:var(--shadow);
+      transition: transform .08s ease, filter .2s ease, border-color .2s ease;
+    }
+    .btn:hover{transform:translateY(-1px); filter:brightness(1.05)}
+    .btn.accent{background:linear-gradient(180deg, #ffe082, #ffca28); color:#1e223d; border-color:#e6b400}
+    .btn.ghost{background:transparent; border-color:#3a4274}
+
+    /* Info banner */
+    .banner{
+      background: linear-gradient(90deg, rgba(125,211,252,.12), rgba(255,213,74,.12));
+      border:1px dashed #37507e;
+      padding:14px 16px; border-radius:14px;
+      color:var(--muted); margin-bottom:18px;
+      display:flex; gap:10px; align-items:flex-start;
+    }
+    .banner b{color:var(--text)}
+
+    /* Grid */
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12,1fr);
+      gap:16px;
+    }
+
+    /* Cards */
+    .card{
+      grid-column: span 12;
+      background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
+      border:1px solid rgba(124,139,204,.22);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .card-header{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:16px 18px; cursor:pointer; user-select:none;
+      background: linear-gradient(180deg, #212749, #1b2040);
+    }
+    .card-title{
+      display:flex; flex-wrap:wrap; gap:10px 14px; align-items:center;
+      font-weight:800; letter-spacing:.2px;
+      color:var(--accent);
+    }
+    .card-sub{
+      color:var(--muted); font-weight:600; font-size:.95rem;
+    }
+    .chev{
+      width:22px; height:22px; display:inline-block; transition: transform .2s ease;
+      border-radius:6px; border:1px solid #33406e; display:grid; place-items:center; color:var(--accent);
+      background:#1a2144;
+    }
+    .card.open .chev{ transform: rotate(180deg) }
+    .card-body{
+      padding: 8px 18px 18px;
+      display:none;
+      animation: fade .18s ease-out;
+    }
+    .card.open .card-body{ display:block }
+    @keyframes fade{ from{ opacity:0; transform: translateY(-4px) } to{ opacity:1; transform:none } }
+
+    /* Lists */
+    .list{
+      margin:12px 0 0 0; padding-left:20px;
+    }
+    .list li{ margin:6px 0; color:#d8def5 }
+    .meta{
+      margin-top:10px; font-size:.88rem; color:var(--muted);
+      border-top:1px dashed #33406e; padding-top:10px;
+    }
+    .pill{ display:inline-block; border:1px solid #3a4274; padding:4px 8px; border-radius:999px; margin-right:6px; margin-top:6px; font-size:.8rem; background:#171d3a }
+
+    /* Two-column on wide screens */
+    @media (min-width: 980px){
+      .span-6 { grid-column: span 6 }
+    }
+
+    /* Footer */
+    .foot{
+      margin-top: 28px; color:var(--muted); font-size:.9rem;
+      display:flex; gap:10px; align-items:center; flex-wrap:wrap;
+    }
+    .tag{background:#152048; border:1px solid #2d3a74; padding:6px 10px; border-radius:12px}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="title">
+        <span>🚀 Processus Consultant SIRH Data</span>
+        <span class="title-badge">HTML • CSS • JS</span>
+      </div>
+      <div class="toolbar">
+        <button class="btn accent" id="expandAll">Tout ouvrir</button>
+        <button class="btn ghost" id="collapseAll">Tout fermer</button>
       </div>
     </div>
-  );
-}
+
+    <div class="banner">💡 <b>Objectif :</b>&nbsp; structurer une démarche claire et actionnable pour la mission SIRH Data (OGF) : cadrage → specs → collaboration → recette → gouvernance. Contenu orienté outils & livrables (Microsoft Fabric / Power BI, Pléiades, Horoquartz).</div>
+
+    <div class="grid" id="cards">
+      <!-- Les cartes seront injectées par JS pour garder le HTML propre -->
+    </div>
+
+    <div class="foot">
+      <span class="tag">🎯 Livrables : cahier des besoins, specs fonctionnelles, dictionnaire de données, règles de gestion, jeux de tests, PV de recette.</span>
+      <span class="tag">🛠️ Écosystème : Microsoft Fabric, Power BI, Teams, Jira/Trello, Confluence, Excel.</span>
+      <span class="tag">🔐 RGPD & sécurité : accès profilés, traçabilité, qualité & gouvernance des données.</span>
+    </div>
+  </div>
+
+  <script>
+    // --- Données (remplace ton tableau React) ---
+    const steps = [
+      {
+        title: "1️⃣ Cadrage",
+        summary: "Recueil et analyse des besoins RH",
+        details: [
+          "Ateliers métiers (RH, Contrôle de gestion) : objectifs, usages, irritants, priorités.",
+          "Cartographie SI & flux : Pléiades (paie/GA), Horoquartz (GTA), autres sources (CRM/ERP).",
+          "Indicateurs RH cibles : effectifs (ETP/HC), absentéisme, turnover, masse salariale, coûts par entité.",
+          "Livrable : Cahier des besoins fonctionnels validé (périmètre, dépendances, priorités)."
+        ],
+        tools: ["Workshops","Jira/Trello","PowerPoint","Notion/Confluence"],
+        kpi: ["Ateliers réalisés","Backlog priorisé","Périmètre validé"]
+      },
+      {
+        title: "2️⃣ Spécifications",
+        summary: "Rédaction des spécifications fonctionnelles",
+        details: [
+          "Traduction besoins → règles de gestion & scénarios d’usage (ex. effectifs moyens mensuels).",
+          "Dictionnaire de données RH partagé : définitions, formats, sources, règles de calcul.",
+          "Règles de gestion : paie (Pleiades), temps (Horoquartz), agrégations, historisation, exceptions.",
+          "Glossaire commun RH–DSI pour sécuriser la communication & l’interprétation."
+        ],
+        tools: ["Confluence","Miro","Excel","SharePoint"],
+        kpi: ["Specs complètes","Glossaire validé","Dictionnaire versionné"]
+      },
+      {
+        title: "3️⃣ Collaboration & Pilotage",
+        summary: "Travail avec les équipes Data/BI",
+        details: [
+          "Coordination avec Data Engineers pour intégration dans Microsoft Fabric / Data Lake.",
+          "Qualité & cohérence : tests de complétude, doublons, référentiels (établissements, métiers).",
+          "Pilotage agile : stand-ups, revues, REX, reporting RH/IT, gestion des risques."
+        ],
+        tools: ["Teams","Asana/Jira","Power BI","Microsoft Fabric"],
+        kpi: ["Taux de complétude","Nb d’anomalies traitées","Vélocité sprint"]
+      },
+      {
+        title: "4️⃣ Recette fonctionnelle",
+        summary: "Tests et validation des livrables",
+        details: [
+          "Cahier de tests fonctionnels : cas RH (paie, GTA, effectifs, masse salariale).",
+          "Exécution recette sur flux & dashboards Power BI (comparatifs source ↔ cible).",
+          "Suivi anomalies jusqu’à PV de recette signé par les utilisateurs."
+        ],
+        tools: ["Excel","Jira","Quality Center","Power BI"],
+        kpi: ["Couverture de test","Anomalies ouvertes","PV signé"]
+      },
+      {
+        title: "5️⃣ Gouvernance & Amélioration continue",
+        summary: "Mettre en place une gouvernance RH Data",
+        details: [
+          "Processus de MAJ & documentation (data stewardship, ownership, RACI).",
+          "Accès sécurisés & conformité RGPD (rôles, audits, journalisation).",
+          "Boucle d’amélioration continue : feedbacks, roadmap d’évolutions, comités de pilotage."
+        ],
+        tools: ["Power BI","Forms/Survey","Confluence","SharePoint"],
+        kpi: ["Satisfaction utilisateurs","Délai de mise en prod","Nb d’évolutions livrées"]
+      }
+    ];
+
+    // --- rendu dynamique des cartes ---
+    const grid = document.getElementById('cards');
+
+    steps.forEach((s, idx) => {
+      const card = document.createElement('section');
+      card.className = 'card span-6';
+      card.innerHTML = `
+        <header class="card-header" data-idx="${idx}">
+          <div>
+            <div class="card-title">${s.title}</div>
+            <div class="card-sub">${s.summary}</div>
+          </div>
+          <div class="chev">⌄</div>
+        </header>
+        <div class="card-body">
+          <ul class="list">
+            ${s.details.map(d => `<li>• ${d}</li>`).join('')}
+          </ul>
+          <div class="meta">
+            <div><strong>🛠️ Outils</strong> :
+              ${s.tools.map(t => `<span class="pill">${t}</span>`).join('')}
+            </div>
+            <div style="margin-top:6px;"><strong>📏 KPI (critères d’acceptation)</strong> :
+              ${s.kpi.map(k => `<span class="pill">${k}</span>`).join('')}
+            </div>
+          </div>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+
+    // --- interactions : accordeons + boutons global ---
+    function toggleCard(card){
+      card.classList.toggle('open');
+    }
+    function setAll(open=true){
+      document.querySelectorAll('.card').forEach(c => {
+        c.classList.toggle('open', open);
+      });
+    }
+    grid.addEventListener('click', (e) => {
+      const header = e.target.closest('.card-header');
+      if(!header) return;
+      toggleCard(header.parentElement);
+    });
+    document.getElementById('expandAll').addEventListener('click', ()=>setAll(true));
+    document.getElementById('collapseAll').addEventListener('click', ()=>setAll(false));
+
+    // Ouvrir la première carte par défaut
+    setTimeout(() => {
+      const first = document.querySelector('.card');
+      if(first) first.classList.add('open');
+    }, 0);
+  </script>
+</body>
+</html>

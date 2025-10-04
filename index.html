@@ -1,0 +1,89 @@
+import { Card, CardContent } from "@/components/ui/card";
+import { motion } from "framer-motion";
+import { ChevronDown } from "lucide-react";
+
+export default function ConsultantSIRHProcess() {
+  const steps = [
+    {
+      title: "1️⃣ Cadrage",
+      summary: "Recueil et analyse des besoins RH",
+      details: [
+        "Organisation d’ateliers détaillés avec les métiers (RH, Contrôle de gestion)",
+        "Cartographie complète des systèmes existants : Pléiades, Sopra, Horoquartz",
+        "Identification et priorisation des indicateurs RH stratégiques : effectifs, absentéisme, turnover, masse salariale, coûts par service",
+        "Production d’un cahier des besoins fonctionnels structuré et validé"
+      ],
+      tools: "Workshops, Trello/Jira, PowerPoint, Notion"
+    },
+    {
+      title: "2️⃣ Spécifications",
+      summary: "Rédaction des spécifications fonctionnelles",
+      details: [
+        "Traduire les besoins métiers en règles fonctionnelles et scénarios d’usage",
+        "Documentation exhaustive des règles de gestion RH (actuelles + futures)",
+        "Élaboration d’un dictionnaire de données RH partagé, versionné et pérenne",
+        "Mise en place d’un glossaire commun RH-DSI pour faciliter la communication"
+      ],
+      tools: "Confluence, Miro, Excel, Power BI, SharePoint"
+    },
+    {
+      title: "3️⃣ Collaboration & Pilotage",
+      summary: "Travail avec les équipes Data/BI",
+      details: [
+        "Coordination avec les Data Engineers pour l’intégration des données dans Microsoft Fabric",
+        "Contrôle qualité et cohérence des données RH intégrées au Data Lake (tests de cohérence, duplications, qualité)",
+        "Suivi projet agile : stand-ups, rétrospectives, reporting aux managers RH et IT"
+      ],
+      tools: "Teams, Asana, Jira, Power BI, Microsoft Fabric"
+    },
+    {
+      title: "4️⃣ Recette fonctionnelle",
+      summary: "Tests et validation des livrables",
+      details: [
+        "Rédaction des cahiers de tests fonctionnels avec cas métiers RH (paie, GTA, effectifs)",
+        "Exécution des recettes sur les flux de données RH et sur les dashboards Power BI",
+        "Suivi et correction des anomalies jusqu’à validation finale par les utilisateurs métiers"
+      ],
+      tools: "Excel, Jira, Quality Center, Power BI"
+    },
+    {
+      title: "5️⃣ Gouvernance & Amélioration continue",
+      summary: "Mettre en place une gouvernance RH Data",
+      details: [
+        "Formaliser les processus de mise à jour et de documentation (data stewardship)",
+        "Mise en place d’un accès sécurisé et hiérarchisé aux données RH (RGPD, droits utilisateurs)",
+        "Suivi des feedbacks utilisateurs via enquêtes et itérations continues sur les dashboards",
+        "Organisation de comités de pilotage pour valider l’évolution des indicateurs RH"
+      ],
+      tools: "Power BI, Feedback utilisateurs, Outils de gouvernance Data, Méthodes Agile"
+    }
+  ];
+
+  return (
+    <div className="p-10 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 min-h-screen">
+      <h2 className="text-4xl font-extrabold text-center text-yellow-300 mb-12">
+        🚀 Processus Consultant SIRH Data
+      </h2>
+      <div className="space-y-8 max-w-5xl mx-auto">
+        {steps.map((step, idx) => (
+          <motion.div
+            key={idx}
+            whileHover={{ scale: 1.03 }}
+            className="rounded-2xl shadow-lg border border-gray-600 bg-gray-800 p-6 hover:shadow-yellow-300/30 transition-all duration-300"
+          >
+            <h3 className="text-xl font-bold text-yellow-200 flex items-center justify-between">
+              {step.title} – <span className="text-gray-300 font-medium">{step.summary}</span>
+              <ChevronDown className="w-5 h-5 text-yellow-400 ml-2" />
+            </h3>
+            <ul className="list-disc ml-6 mt-4 space-y-2 text-gray-200 text-sm">
+              {step.details.map((d, i) => (
+                <li key={i}>{d}</li>
+              ))}
+            </ul>
+            <p className="text-xs text-gray-400 italic mt-3">🛠️ Outils : {step.tools}</p>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  );
+}

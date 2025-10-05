@@ -62,7 +62,25 @@
 
     /* print */
     @media print{.toolbar{display:none!important} body{background:#fffaf0}}
-  </style>
+    /* ====== Extras: infobulles, modale glossaire, définitions ====== */
+    .abbr{ position:relative; text-decoration:none; border-bottom:1px dotted #cfae8a; padding-bottom:1px; cursor:help }
+    .abbr:hover::after{
+      content: attr(data-def);
+      position:absolute; left:0; top: calc(100% + 6px);
+      background:#FFF7ED; color:var(--text); border:1px solid var(--border);
+      padding:8px 10px; border-radius:12px; width:min(320px, 90vw); z-index:9999;
+      box-shadow:0 8px 22px rgba(0,0,0,.08);
+    }
+
+    .fab{ position:fixed; right:18px; bottom:18px; width:48px; height:48px; border-radius:999px; border:1px solid var(--border); background:var(--brand); color:#fff9ee; font-weight:900; box-shadow:0 8px 22px rgba(0,0,0,.15); cursor:pointer }
+    .fab:hover{ filter:brightness(1.05) }
+
+    .modal{ position:fixed; inset:0; background:rgba(31,41,55,.28); display:none; align-items:center; justify-content:center; padding:16px; z-index:9998 }
+    .modal.open{ display:flex }
+    .modal-dialog{ background:#FBF7EF; color:var(--text); border:1px solid var(--border); border-radius:18px; width:min(860px,96vw); max-height:80vh; overflow:auto; box-shadow:0 10px 25px rgba(0,0,0,.12); padding:16px }
+    .modal-header{ display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:8px }
+
+</style>
 </head>
 <body>
   <main class="app" id="app">
@@ -188,6 +206,73 @@
         </div>
       </article>
     </section>
+    <div class="sep"></div>
+
+    <!-- 📄 Définitions des documents (clair + exemples) -->
+    <section class="card" id="defs">
+      <h2>📄 Définitions des documents / livrables</h2>
+      <div class="content">
+        <p class="muted">Chaque document demandé ci‑dessous comporte une <strong>définition précise</strong>, son <strong>contenu type</strong> et un <strong>exemple</strong>. Objectif : que tout le monde sache exactement ce que c’est et à quoi ça sert.</p>
+        <ul style="padding-left:18px; margin:0">
+          <li><strong>📘 Cahier des besoins</strong>
+            <div><b>Définition :</b> document de cadrage qui formalise objectifs, périmètre, utilisateurs, priorités et contraintes.</div>
+            <div><b>Contenu type :</b> objectifs, indicateurs cibles, acteurs, cas d’usage, périmètre IN/OUT, priorités, risques.</div>
+            <div><b>Exemple :</b> « Suivre l’<em>absentéisme</em> mensuel par établissement » (usage manager, seuil d’alerte 4%).</div>
+          </li>
+          <li><strong>🧾 Spécifications fonctionnelles</strong>
+            <div><b>Définition :</b> description détaillée de ce que doit faire le système côté métier (sans code).</div>
+            <div><b>Contenu type :</b> règles de calcul, mapping source→cible, cas particuliers, maquettes écrans/rapports, critères d’acceptation.</div>
+            <div><b>Exemple :</b> « <em>Masse salariale mensuelle</em> = somme des éléments de paie bruts (codes X,Y,Z) hors primes exceptionnelles ».</div>
+          </li>
+          <li><strong>🧮 Règles de gestion</strong>
+            <div><b>Définition :</b> catalogue des règles qui transforment, filtrent ou agrègent les données.</div>
+            <div><b>Contenu type :</b> ID règle, description, champs impactés, formule, exceptions, version/date, propriétaire.</div>
+            <div><b>Exemple :</b> RG‑GTA‑012 : « Heures sup. = max(0, Heures_Totales − 35h) ; majoration 25% sauf cadre au forfait ».</div>
+          </li>
+          <li><strong>🗂️ Dictionnaire de données RH</strong>
+            <div><b>Définition :</b> inventaire des champs : nom, définition, format, source, qualité, propriétaire.</div>
+            <div><b>Contenu type :</b> Tableau « Champ | Définition | Type/Format | Source | Règle de calcul | Qualité | Sensibilité ».</div>
+            <div><b>Exemple :</b> <em>Matricule</em> | Identifiant salarié unique | texte(10) | Pléiades | N/A | Unicité=Oui | Perso.</div>
+          </li>
+          <li><strong>🧪 Plan/Cahier de tests</strong>
+            <div><b>Définition :</b> scénarios pour vérifier que les calculs et écrans restituent les bons résultats.</div>
+            <div><b>Contenu type :</b> ID test, prérequis, étapes, données d’essai, résultat attendu, statut, preuves.</div>
+            <div><b>Exemple :</b> T‑DSN‑01 : « Comparer montant BRUT_Paie entre source Pléiades et tableau Power BI pour 10 salariés ».</div>
+          </li>
+          <li><strong>✅ PV de recette</strong>
+            <div><b>Définition :</b> procès‑verbal qui atteste que les tests sont conformes et autorise la mise en production.</div>
+            <div><b>Contenu type :</b> périmètre testé, synthèse résultats, anomalies restantes, dérogations, signatures.</div>
+            <div><b>Exemple :</b> « Couverture : 96% ; 0 anomalie critique ; MEP validée le JJ/MM/AAAA (DRH/DSI). »</div>
+          </li>
+          <li><strong>🗺️ Cartographie des flux</strong>
+            <div><b>Définition :</b> schéma simple des entrées/sorties, transformations et responsables.</div>
+            <div><b>Contenu type :</b> sources, étapes, destinations, fréquences, SLA, responsabilités.</div>
+            <div><b>Exemple :</b> Pléiades → (quotidien) → Fabric Lake → Modèles → Power BI (DRH/Contrôle de gestion).</div>
+          </li>
+          <li><strong>📚 Glossaire RH‑DSI</strong>
+            <div><b>Définition :</b> dictionnaire des sigles/termes partagés pour éviter les ambiguïtés.</div>
+            <div><b>Contenu type :</b> terme, définition claire, exemples, propriétaire de la définition.</div>
+            <div><b>Exemple :</b> <em>ETP</em> = Équivalent Temps Plein ; « 1 ETP = temps plein sur 1 mois ».</div>
+          </li>
+          <li><strong>📋 Backlog priorisé</strong>
+            <div><b>Définition :</b> liste ordonnée des items à faire (usages, corrections, évolutions) avec priorité et effort.</div>
+            <div><b>Contenu type :</b> ID, intitulé, valeur métier, priorité (MoSCoW), estimation, statut, responsable.</div>
+            <div><b>Exemple :</b> BK‑08 : « Dashboard Absentéisme par établissement » — Doit ; 5 pts ; Responsable : PO RH.</div>
+          </li>
+          <li><strong>👩‍🏫 Guide utilisateur</strong>
+            <div><b>Définition :</b> mode d’emploi pas‑à‑pas pour utiliser les rapports et comprendre les indicateurs.</div>
+            <div><b>Contenu type :</b> parcours, captures d’écran, FAQ, erreurs courantes, contacts support.</div>
+            <div><b>Exemple :</b> « Filtrer par établissement » → étapes illustrées + interprétation d’un KPI.</div>
+          </li>
+          <li><strong>🛟 Plan de support</strong>
+            <div><b>Définition :</b> organisation de l’aide aux utilisateurs après mise en service.</div>
+            <div><b>Contenu type :</b> canaux (Teams/mail), niveaux (N1/N2), délais de réponse, rôles, calendrier.</div>
+            <div><b>Exemple :</b> Ticket N1 (accès) : réponse &lt; 4h ouvrées ; N2 (données) : correction &lt; 5 jours.</div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
     <div class="sep"></div>
 
     <!-- 👋 PRESTATAIRE / PROPOSITION -->
@@ -363,6 +448,67 @@
 
     <div class="sep"></div>
 
+    <!-- ✨ Nouvelle section ajoutée sans rien supprimer/modifier -->
+    <section class="card sky" id="processus-sirh-data">
+      <h2>🚀 Processus Consultant SIRH Data</h2>
+      <div class="content">
+        <ol style="margin:0">
+          <li>
+            <strong>1️⃣ Cadrage — Recueil et analyse des besoins RH</strong>
+            <ul>
+              <li>Organisation d’ateliers détaillés avec les métiers (RH, Contrôle de gestion).</li>
+              <li>Cartographie complète des systèmes existants : Pléiades, Sopra, Horoquartz.</li>
+              <li>Identification et priorisation des indicateurs RH stratégiques : effectifs, absentéisme, turnover, masse salariale, coûts par service.</li>
+              <li>Production d’un cahier des besoins fonctionnels structuré et validé.</li>
+            </ul>
+            <div class="chips"><span class="chip">Workshops</span><span class="chip">Trello / Jira</span><span class="chip">PowerPoint</span><span class="chip">Notion</span></div>
+          </li>
+
+          <li style="margin-top:12px">
+            <strong>2️⃣ Spécifications — Rédaction des spécifications fonctionnelles</strong>
+            <ul>
+              <li>Traduire les besoins métiers en règles fonctionnelles et scénarios d’usage.</li>
+              <li>Documentation exhaustive des règles de gestion RH (actuelles + futures).</li>
+              <li>Élaboration d’un dictionnaire de données RH partagé, versionné et pérenne.</li>
+              <li>Mise en place d’un glossaire commun RH–DSI pour faciliter la communication.</li>
+            </ul>
+            <div class="chips"><span class="chip">Confluence</span><span class="chip">Miro</span><span class="chip">Excel</span><span class="chip">Power BI</span><span class="chip">SharePoint</span></div>
+          </li>
+
+          <li style="margin-top:12px">
+            <strong>3️⃣ Collaboration & Pilotage — Travail avec les équipes Data/BI</strong>
+            <ul>
+              <li>Coordination avec les Data Engineers pour l’intégration des données dans Microsoft Fabric.</li>
+              <li>Contrôle qualité et cohérence des données RH intégrées au Data Lake (tests de cohérence, duplications, qualité).</li>
+              <li>Suivi projet agile : stand‑ups, rétrospectives, reporting aux managers RH et IT.</li>
+            </ul>
+            <div class="chips"><span class="chip">Teams</span><span class="chip">Asana</span><span class="chip">Jira</span><span class="chip">Power BI</span><span class="chip">Microsoft Fabric</span></div>
+          </li>
+
+          <li style="margin-top:12px">
+            <strong>4️⃣ Recette fonctionnelle — Tests et validation des livrables</strong>
+            <ul>
+              <li>Rédaction des cahiers de tests fonctionnels avec cas métiers RH (paie, GTA, effectifs).</li>
+              <li>Exécution des recettes sur les flux de données RH et sur les dashboards Power BI.</li>
+              <li>Suivi et correction des anomalies jusqu’à validation finale par les utilisateurs métiers.</li>
+            </ul>
+            <div class="chips"><span class="chip">Excel</span><span class="chip">Jira</span><span class="chip">Quality Center</span><span class="chip">Power BI</span></div>
+          </li>
+
+          <li style="margin-top:12px">
+            <strong>5️⃣ Gouvernance & Amélioration continue — Mettre en place une gouvernance RH Data</strong>
+            <ul>
+              <li>Formaliser les processus de mise à jour et de documentation (data stewardship).</li>
+              <li>Mise en place d’un accès sécurisé et hiérarchisé aux données RH (RGPD, droits utilisateurs).</li>
+              <li>Suivi des feedbacks utilisateurs via enquêtes et itérations continues sur les dashboards.</li>
+              <li>Organisation de comités de pilotage pour valider l’évolution des indicateurs RH.</li>
+            </ul>
+            <div class="chips"><span class="chip">Power BI</span><span class="chip">Feedback utilisateurs</span><span class="chip">Outils de gouvernance Data</span><span class="chip">Méthodes Agile</span></div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
     <section class="card" style="border-style:dashed">
       <h2>💌 Candidater / Partager</h2>
       <div class="content">
@@ -408,6 +554,21 @@
       </div>
     </section>
 
+    <!-- Bouton fixe & modale Glossaire -->
+    <button id="gloss-fab" class="fab" title="Ouvrir le glossaire">?</button>
+    <div id="gloss-modal" class="modal" aria-hidden="true">
+      <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="gloss-modal-title">
+        <div class="modal-header">
+          <h3 id="gloss-modal-title" style="margin:0">📖 Glossaire</h3>
+          <button id="gloss-close" class="btn">✕</button>
+        </div>
+        <div class="row" style="margin:8px 0 12px 0">
+          <input class="chip" id="gloss-modal-search" placeholder="Rechercher un sigle…" style="padding:10px 12px;border-radius:12px;width:100%;max-width:520px" />
+        </div>
+        <ul id="gloss-modal-list" style="list-style:none; padding-left:0; columns: 1; column-gap: 32px;"></ul>
+      </div>
+    </div>
+
     <footer class="muted" style="margin-top:24px;font-size:12px">© <span id="year"></span> — Modèle HTML/CSS/JS sans dépendances, palette pastel (pas de vert), fond écru, émojis 🪄</footer>
   </main>
 
@@ -434,20 +595,4 @@
     document.getElementById('copyText').addEventListener('click',copyWholePage);
     document.getElementById('copyText2').addEventListener('click',copyWholePage);
 
-    // filtre du glossaire (recherche instantanée)
-    const gs = document.getElementById('gloss-search');
-    if (gs) {
-      gs.addEventListener('input', function(){
-        const q = this.value.toLowerCase().trim();
-        document.querySelectorAll('#gloss-list li').forEach(li => {
-          const text = (li.dataset.term || '') + ' ' + li.innerText.toLowerCase();
-          li.style.display = text.includes(q) ? '' : 'none';
-        });
-      });
-    }
-
-    // année footer
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
-</body>
-</html>
+    // filtre du glossaire (recherche 
